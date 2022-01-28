@@ -12,8 +12,6 @@ class Wordle:
         self.letters: dict[int, Union[list, None]] = {}
         self.wrong_letters: set[str] = {"'"}
         self.misplaced_letters: set[str] = set()
-        self._final_suggestions = []
-        self._all_words = []
         for x in range(5):
             self.letters[x] = [chr(ord('a') + i) for i in range(26)]
 
@@ -48,14 +46,13 @@ class Wordle:
 
     def _create_all_words(self, index: int, word: Word) -> Word:
         if index == 5:
-            self._all_words.append(''.join(word))
-            return
-        if self.letters[index] is not None:
+            yield ''.join(word)
+        if index != 5 and self.letters[index] is not None:
             for letter in self.letters[index]:
                 word[index] = letter
-                self._create_all_words(index + 1, word)
-        elif self.letters[index] is None:
-            self._create_all_words(index + 1, word)
+                yield from self._create_all_words(index + 1, word)
+        elif index != 5 and self.letters[index] is None:
+            yield from self._create_all_words(index + 1, word)
 
     def _verify_word(self, word: str) -> None:
         if self._formulated_word.match(word) and not any(filter(lambda x: x in self.wrong_letters, word)) is True:
@@ -70,16 +67,8 @@ class Wordle:
         if self._tries == 0:
             print("Can't make a suggestion without any try")
 
-        suggestion_word = Word()
-        for x in range(5):
-            suggestion_word[x] = self._formulated_word[x]
-
-        self._all_words.clear()
-        self._create_all_words(0, suggestion_word.copy())
-
-        self._final_suggestions = []
-
-        suggested_words = tuple(filter(Word.valid, self._all_words))
+        suggested_words = filter(Word.valid, self._create_all_words(
+            0, self._formulated_word.copy()))
         verified_words = tuple(filter(self._verify_word, suggested_words))
         print(*verified_words)
         self._predict(verified_words)
@@ -109,13 +98,14 @@ class Wordle:
         print()
 
 
-@execute_this
+# @execute_this
 def wordle():
-    # perky
+    # Final word:
+    # TODO: word with 2 letters and a third redundant letter is also there
     wordle = Wordle()
-    wordle.add_try("aglet", (-1, -1, -1, 0, -1))
-    wordle.add_try("eerie", (-1, 1, 1, -1, -1))
-    wordle.add_try("berry", (-1, 1, 1, -1, 1))
-    wordle.add_try("nerdy", (-1, 1, 1, -1, 1))
-    wordle.add_try("jerky", (-1, 1, 1, 1, 1))
+    wordle.add_try("aglet", (-1, -1, -1, 1, 0))
+    # wordle.add_try("tepee", (1, 0, -1, 1, 0))
+    # wordle.add_try("trees", (-1, 1, 1, -1, 1))
+    # wordle.add_try("nerdy", (-1, 1, 1, -1, 1))
+    # wordle.add_try("jerky", (-1, 1, 1, 1, 1))
     wordle.make_a_suggestion()
