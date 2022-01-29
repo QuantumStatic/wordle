@@ -74,7 +74,12 @@ class Wordle:
         self._predict(verified_words)
 
     def _predict(self, words: tuple[str]) -> None:
-        counted = {}
+        
+        if len(words) == 1:
+            print(f"The code thinks the word is {words[0]}!")
+            return
+
+        counted: dict[str, int] = {}
         for letter in ''.join(words):
             try:
                 counted[letter] += 1
@@ -91,21 +96,21 @@ class Wordle:
                 strongest_word = [word]
             elif temp_score == largest_score:
                 strongest_word.append(word)
-
+        
         print("Recommended Suggestion:", end=' ')
         for word in strongest_word:
             print(word, end=' ')
         print()
 
 
-# @execute_this
+@execute_this
 def wordle():
-    # Final word:
+    # Final word: quiet
     # TODO: word with 2 letters and a third redundant letter is also there
     wordle = Wordle()
-    wordle.add_try("aglet", (-1, -1, -1, 1, 0))
-    # wordle.add_try("tepee", (1, 0, -1, 1, 0))
-    # wordle.add_try("trees", (-1, 1, 1, -1, 1))
+    wordle.add_try("pussy", (-1, 1, -1, -1, -1))
+    wordle.add_try("queue", (1, 1, 0, -1, -1))
+    # wordle.add_try("risky", (0, -1, 0, 1, -1))
     # wordle.add_try("nerdy", (-1, 1, 1, -1, 1))
     # wordle.add_try("jerky", (-1, 1, 1, 1, 1))
     wordle.make_a_suggestion()
