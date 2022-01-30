@@ -1,4 +1,3 @@
-from myFunctions import execute_this
 from Word import Word
 from Feedback import Feedback
 from typing import Union
@@ -103,7 +102,6 @@ class Wordle:
         print()
 
 
-@execute_this
 def wordle():
     # Final word: wrung
     # TODO: word with 2 letters and a third redundant letter is also there
@@ -112,3 +110,5 @@ def wordle():
     wordle.add_try("award", (-1, 0, -1, 0, -1))
     wordle.add_try("wrist", (1, 1, -1, -1, -1))
     wordle.make_a_suggestion()
+
+wordle()

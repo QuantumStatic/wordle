@@ -1,4 +1,3 @@
-from myFunctions import execute_this
 from typing import Any
 import enchant
 import re
@@ -68,7 +67,6 @@ class Word(list):
         return ''.join(self)
 
 
-@execute_this
 def main():
     print("Let's pass 'kince' to suggestion code")
     print("Word.suggest('kince') =", Word.suggest('kince'))

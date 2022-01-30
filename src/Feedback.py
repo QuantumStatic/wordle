@@ -1,13 +1,15 @@
-from myFunctions import execute_this
 from typing import Union
 
 
 class Feedback:
     def __init__(self, values: Union[list[int], tuple[int]]):
         self._values: Union[list[int], tuple[int]] = values
-        self._confirmed_letters = (index for index, value in enumerate(self._values) if value == 1)
-        self._wrongly_placed_letters = (index for index, value in enumerate(self._values) if value == 0)
-        self._wrong_letters = (index for index, value in enumerate(self._values) if value == -1)
+        self._confirmed_letters = (
+            index for index, value in enumerate(self._values) if value == 1)
+        self._wrongly_placed_letters = (
+            index for index, value in enumerate(self._values) if value == 0)
+        self._wrong_letters = (
+            index for index, value in enumerate(self._values) if value == -1)
 
     def __getitem__(self, key) -> int:
         return self._values[key]
