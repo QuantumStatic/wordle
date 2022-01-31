@@ -67,6 +67,3 @@ class Word(list):
         return ''.join(self)
 
 
-def main():
-    print("Let's pass 'kince' to suggestion code")
-    print("Word.suggest('kince') =", Word.suggest('kince'))
