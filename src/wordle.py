@@ -100,15 +100,3 @@ class Wordle:
         for word in strongest_word:
             print(word, end=' ')
         print()
-
-
-def wordle():
-    # Final word: wrung
-    # TODO: word with 2 letters and a third redundant letter is also there
-    wordle = Wordle()
-    wordle.add_try("power", (-1, -1, 0, -1, 0))
-    wordle.add_try("award", (-1, 0, -1, 0, -1))
-    wordle.add_try("wrist", (1, 1, -1, -1, -1))
-    wordle.make_a_suggestion()
-
-wordle()
