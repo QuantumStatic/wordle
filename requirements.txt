@@ -1,2 +1,2 @@
-enchant == 3.2.2
+pyenchant == 3.2.2
  
