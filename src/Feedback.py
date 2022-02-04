@@ -1,6 +1,5 @@
 from typing import Union
 
-
 class Feedback:
     def __init__(self, values: Union[list[int], tuple[int]]):
         self._values: Union[list[int], tuple[int]] = values
@@ -25,3 +24,7 @@ class Feedback:
     @property
     def wrong_letters(self) -> int:
         yield from self._wrong_letters
+
+    @property
+    def values(self) -> Union[list[int], tuple[int]]:
+        return self._values
