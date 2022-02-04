@@ -1,6 +1,7 @@
 from Word import Word
 from Feedback import Feedback
 from typing import Union
+from DataStorage import DataStorage
 
 
 class Wordle:
@@ -11,6 +12,7 @@ class Wordle:
         self.letters: dict[int, Union[list, None]] = {}
         self.wrong_letters: set[str] = {"'"}
         self.misplaced_letters: set[str] = set()
+        self.simple_tries: list[Word] = []
         for x in range(5):
             self.letters[x] = [chr(ord('a') + i) for i in range(26)]
 
@@ -42,6 +44,7 @@ class Wordle:
         word = Word(word)
         self._tries[word] = Feedback(feedback)
         self._update_formulated_word(word)
+        self.simple_tries.append(word)
 
     def _create_all_words(self, index: int, word: Word) -> Word:
         if index == 5:
@@ -66,9 +69,18 @@ class Wordle:
         if self._tries == 0:
             print("Can't make a suggestion without any try")
 
-        suggested_words = filter(Word.valid, self._create_all_words(
-            0, self._formulated_word.copy()))
+        suggested_words = None
+        for word in reversed(self.simple_tries):
+            suggested_words = DataStorage().load_object(word.get_id(word, self._tries[word]))
+            if suggested_words is not None:
+                break
+        else:
+            suggested_words = filter(Word.valid, self._create_all_words(0, self._formulated_word.copy()))
+        
         verified_words = tuple(filter(self._verify_word, suggested_words))
+        if not DataStorage().saved(Word.get_id(self.simple_tries[-1], self._tries[self.simple_tries[-1]])):
+            DataStorage().store_object(Word.get_id(self.simple_tries[-1], self._tries[self.simple_tries[-1]]), verified_words)
+
         print(*verified_words)
         self._predict(verified_words)
 
