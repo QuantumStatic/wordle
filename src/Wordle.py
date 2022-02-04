@@ -69,10 +69,14 @@ class Wordle:
         if self._tries == 0:
             print("Can't make a suggestion without any try")
 
+        if all(self._formulated_word):
+            print(f"The word is {''.join(self._formulated_word)}!")
+            return
+
         suggested_words = None
         for word in reversed(self.simple_tries):
-            suggested_words = DataStorage().load_object(word.get_id(word, self._tries[word]))
-            if suggested_words is not None:
+            if DataStorage().saved(Word.get_id(word, self._tries[word])):
+                suggested_words = DataStorage().load_object(Word.get_id(word, self._tries[word]))
                 break
         else:
             suggested_words = filter(Word.valid, self._create_all_words(0, self._formulated_word.copy()))

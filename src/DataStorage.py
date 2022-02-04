@@ -1,5 +1,7 @@
 import pickle
 from typing import Any,  Union
+
+
 class DataStorage:
 
     _DataStorageObj = None
@@ -32,11 +34,11 @@ class DataStorage:
                     pickle.dump({}, handle, protocol=pickle.HIGHEST_PROTOCOL)
                 return {}
 
-    def store_object(self, code:int, words):
+    def store_object(self, code: int, words):
         self._data[code] = words
         self._data_storage_handler(self._data)
 
-    def load_object(self, code:int):
+    def load_object(self, code: int):
         yield from self._data.setdefault(code, None)
 
     def remove(self, *names):
