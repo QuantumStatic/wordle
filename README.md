@@ -2,10 +2,18 @@
 My friends could play wordle and I couldn't so I wrote python code to beat them. You make a guess on wordle and write the feed the feedback you get from wordle onto the code!
 
 ## How to install
+
+### Terminal
 In your terminal write the following command. You must have python installed to run it.
 ```
 pip3 install git+https://github.com/QuantumStatic/wordle
 ```
+
+### Pycharm
+In the bottom left of the screent there should be a pane labelled as '**Python Packages**'. See image below
+
+![Imgur](https://drive.google.com/file/d/1BfFN8_xxPupd453NeMsJ_u-Jy_3r1-Ri/view?usp=sharing)
+
 
 ## Requirements
 - Python 3.6+
