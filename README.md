@@ -1,11 +1,14 @@
 # Wordle
-My friends could play wordle and I couldn't so I wrote code to beat them.
+My friends could play wordle and I couldn't so I wrote python code to beat them.
 
 ## How to install
-In your terminal write the following command
+In your terminal write the following command. You must have python installed to run it.
 ```
 pip3 install git+https://github.com/QuantumStatic/wordle
 ```
+
+## Requirements
+- Python 3.6+
 
 ## How to run
 ### Import statment
