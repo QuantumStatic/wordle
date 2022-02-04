@@ -12,9 +12,14 @@ pip3 install git+https://github.com/QuantumStatic/wordle
 ### Pycharm
 In the bottom left of the screent there should be a pane labelled as '**Python Packages**'. See image below
 
-![Image showing where pycharm package pane is - light mode](https://github.com/QuantumStatic/wordle/blob/main/Assets/Light%20Mode.png#gh-light-mode-only) 
-![Image showing where pycharm package pane is - dark mode](https://github.com/QuantumStatic/wordle/blob/main/Assets/Dark%20Mode.png#gh-dark-mode-only) 
+![Image showing where pycharm package pane is - light mode](https://github.com/QuantumStatic/wordle/blob/main/Assets/Python%20Package/Light%20Mode.png#gh-light-mode-only) 
+![Image showing where pycharm package pane is - dark mode](https://github.com/QuantumStatic/wordle/blob/main/Assets/Python%20Package/Dark%20Mode.png#gh-dark-mode-only) 
 
+After clicking on that choose '*from version control*' and then add the link to repository as shown below.
+![Image showing what to do with add package option - light mode](https://github.com/QuantumStatic/wordle/blob/main/Assets/git%20install%20pycharm/Light%20Mode.png#gh-light-mode-only) 
+![Image showing what to do with add package option - dark mode](https://github.com/QuantumStatic/wordle/blob/main/Assets/git%20install%20pycharm/Dark%20Mode.png#gh-dark-mode-only) 
+
+After that you click on '**OK**'. and done!
 
 ## Requirements
 - Python 3.6+
