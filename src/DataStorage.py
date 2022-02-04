@@ -1,8 +1,5 @@
 import pickle
 from typing import Any,  Union
-from myFunctions import execute_this
-
-
 class DataStorage:
 
     _DataStorageObj = None
@@ -57,10 +54,3 @@ class DataStorage:
 
     def __contains__(self, item):
         return item in self._data
-
-
-
-@execute_this
-def main():
-    storage_manager = DataStorage()
-    print(storage_manager)
