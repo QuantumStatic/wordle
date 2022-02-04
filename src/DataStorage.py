@@ -35,9 +35,9 @@ class DataStorage:
                 with open(self.path, 'rb') as handle:
                     return pickle.load(handle)
             except FileNotFoundError:
-                with open(self.path, 'wb') as handle:
-                    pickle.dump({}, handle, protocol=pickle.HIGHEST_PROTOCOL)
-                return {"creation": datetime.today().strftime('%Y-%m-%d')}
+                create_file = {"creation": datetime.today().strftime('%Y-%m-%d')}
+                self._data_storage_handler(create_file)
+                return create_file
 
     def store_object(self, code: int, words):
         self._data[code] = words
