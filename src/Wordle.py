@@ -31,8 +31,12 @@ class Wordle:
             for index in range(5):
                 try:
                     if new_word[wrong_letter_index] in self._formulated_word:
-                        self.letters[index].remove(
-                            new_word[wrong_letter_index])
+                        wrong_letters = tuple(map(lambda x: new_word[x],self._tries[new_word].wrongly_placed_letters))
+                        if new_word[wrong_letter_index] not in wrong_letters:
+                            self.letters[index].remove(new_word[wrong_letter_index])
+                        else:
+                            self.letters[wrong_letter_index].remove(new_word[wrong_letter_index])
+                            break
                     elif new_word[wrong_letter_index] not in self.misplaced_letters:
                         self.letters[index].remove(
                             new_word[wrong_letter_index])
@@ -65,7 +69,7 @@ class Wordle:
                 return True
         return False
 
-    def make_a_suggestion(self) -> set[str]:
+    def make_a_suggestion(self, all_available_words = False, prediction = True) -> set[str]:
         if self._tries == 0:
             print("Can't make a suggestion without any try")
 
@@ -84,9 +88,10 @@ class Wordle:
         verified_words = tuple(filter(self._verify_word, suggested_words))
         if not DataStorage().saved(Word.get_id(self.simple_tries[-1], self._tries[self.simple_tries[-1]])):
             DataStorage().store_object(Word.get_id(self.simple_tries[-1], self._tries[self.simple_tries[-1]]), verified_words)
-
-        print(*verified_words)
-        self._predict(verified_words)
+        if all_available_words:
+            print(*verified_words)
+        if prediction:
+            self._predict(verified_words)
 
     def _predict(self, words: tuple[str]) -> None:
 
