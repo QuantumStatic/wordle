@@ -1,5 +1,6 @@
 import pickle
-from typing import Any,  Union
+from typing import Any, Union
+from datetime import datetime
 
 
 class DataStorage:
@@ -19,6 +20,10 @@ class DataStorage:
 
     def _setup(self):
         self._data = self._data_storage_handler()
+        if self._data['creation'] != datetime.today().strftime('%Y-%m-%d'):
+            self._data.clear()
+            self._data['creation'] = datetime.today().strftime('%Y-%m-%d')
+            self._data_storage_handler(self._data)
 
     def _data_storage_handler(self, obj_to_store=None) -> Union[dict[str, Any], None]:
         if obj_to_store is not None:
@@ -32,7 +37,7 @@ class DataStorage:
             except FileNotFoundError:
                 with open(self.path, 'wb') as handle:
                     pickle.dump({}, handle, protocol=pickle.HIGHEST_PROTOCOL)
-                return {}
+                return {"creation": datetime.today().strftime('%Y-%m-%d')}
 
     def store_object(self, code: int, words):
         self._data[code] = words
