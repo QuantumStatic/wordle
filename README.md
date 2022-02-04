@@ -1,5 +1,5 @@
 # Wordle
-My friends could play wordle and I couldn't so I wrote python code to beat them.
+My friends could play wordle and I couldn't so I wrote python code to beat them. You make a guess on wordle and write the feed the feedback you get from wordle onto the code!
 
 ## How to install
 In your terminal write the following command. You must have python installed to run it.
@@ -9,6 +9,9 @@ pip3 install git+https://github.com/QuantumStatic/wordle
 
 ## Requirements
 - Python 3.6+
+
+## Runtime
+Your first guess may take upto a minute but after that it's smooth sailing. 
 
 ## How to run
 ### Import statment
