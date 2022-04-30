@@ -32,6 +32,8 @@ class Word(list):
         else:
             super().__init__((None for _ in range(5)))
 
+        self._code = None
+
     def append(self, __object: Any) -> None:
         raise NotImplementedError("Cannot append to a word")
 
@@ -51,6 +53,14 @@ class Word(list):
     @classmethod
     def valid(cls, word: str) -> bool:
         return any(cls._spell_checker.known(word))
+
+    @staticmethod
+    def get_id(word, feedback: Feedback) -> int:
+        if word._code is None:
+            word._code = 0
+            for index, val in enumerate(zip(word, feedback.values)):
+                word._code += (index + 1) * ord(val[0]) * val[1]
+        return word._code
 
     def __hash__(self) -> int:
         return hash(tuple(self))
