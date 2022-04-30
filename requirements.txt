@@ -1,2 +1,2 @@
-pyenchant == 3.2.2
+pyspellchecker == 0.6.3
  

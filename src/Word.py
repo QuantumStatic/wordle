@@ -1,10 +1,6 @@
-from __future__ import annotations
-from typing import Any, TYPE_CHECKING
-import enchant
+from typing import Any
+from spellchecker import SpellChecker
 import re
-if TYPE_CHECKING:
-    from Feedback import Feedback
-
 
 
 class Word(list):
@@ -13,7 +9,7 @@ class Word(list):
     Fixed Length data structure of length 5
     """
 
-    _dictionary = enchant.Dict('en_US')
+    _spell_checker = SpellChecker()
 
     @staticmethod
     def _assignment_validation(value, limit_length: int = 5) -> bool:
@@ -36,8 +32,6 @@ class Word(list):
         else:
             super().__init__((None for _ in range(5)))
 
-        self._code = None
-
     def append(self, __object: Any) -> None:
         raise NotImplementedError("Cannot append to a word")
 
@@ -48,29 +42,20 @@ class Word(list):
 
     @property
     def is_valid(self) -> bool:
-        return Word._dictionary.check(''.join(self))
+        return any(Word._spell_checker.known([''.join(self)]))
 
     @classmethod
     def suggest(cls, word: str) -> list:
-        return tuple(filter(lambda x: len(x) == 5, cls._dictionary.suggest(word)))
+        return tuple(filter(lambda x: len(x) == 5, cls._spell_checker.candidates(word)))
 
     @classmethod
-    def valid(cls, word:str) -> bool:
-        return cls._dictionary.check(word)
-
-    @staticmethod
-    def get_id(word, feedback:Feedback) -> int:
-        if word._code is None:
-            word._code = 0
-            for index, val in enumerate(zip(word, feedback.values)):
-                word._code += (index + 1) * ord(val[0]) * val[1]
-
-        return word._code
+    def valid(cls, word: str) -> bool:
+        return any(cls._spell_checker.known(word))
 
     def __hash__(self) -> int:
         return hash(tuple(self))
 
-    def match(self, word:str) -> bool:
+    def match(self, word: str) -> bool:
         for x in range(5):
             if self[x] is None:
                 continue
@@ -82,3 +67,6 @@ class Word(list):
         return ''.join(self)
 
 
+def main():
+    print("Let's pass 'kince' to suggestion code")
+    print("Word.suggest('kince') =", Word.suggest('kince'))
